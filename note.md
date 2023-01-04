@@ -31,7 +31,7 @@ fatal: unable to access 'https://github.com/pfsjdsn/ts_component_development.git
 解除ssl验证
 
 ```js
-git config --global http.sslVerify "false"
+git config --global https.sslVerify "false"
 ```
 
 
