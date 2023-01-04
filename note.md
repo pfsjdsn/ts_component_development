@@ -6,10 +6,26 @@ tsc -v
 
 
 
-#### 运行文件
+#### 运行文件（生成js文件）
 
 ```js
 tsc fileName.ts
+```
+
+
+
+#### 运行文件（可打印出结果）
+
+```js
+ts-node fileName.ts
+```
+
+
+
+#### ts-node安装
+
+```js
+npm install -g  @types/node
 ```
 
 
@@ -19,6 +35,8 @@ tsc fileName.ts
 ```js
 cat fileName.ts
 ```
+
+
 
 
 
