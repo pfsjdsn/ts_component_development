@@ -14,9 +14,25 @@ tsc fileName.ts
 
 
 
-### 查看文件内容
+#### 查看文件内容
 
 ```js
 cat fileName.ts
 ```
+
+
+
+#### git pus 报错
+
+fatal: unable to access 'https://github.com/pfsjdsn/ts_component_development.git/': OpenSSL SSL_read: Connection was reset, errno 10054
+
+解决方案：
+
+解除ssl验证
+
+```js
+git config --global http.sslVerify "false"
+```
+
+
 
