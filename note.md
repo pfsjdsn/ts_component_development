@@ -75,3 +75,17 @@ class Queue{
 }
 ```
 
+
+
+#### ts 报错 在赋值前使用了变量“sum”
+
+解决：
+
+用@ts-ignore注释标记
+
+```js
+let sum:(x:number,y:number) =>number
+// @ts-ignore
+const result = sum(1,2)
+```
+
