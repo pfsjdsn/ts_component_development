@@ -54,3 +54,24 @@ git config --global https.sslVerify "false"
 
 
 
+#### ts 报错 类型“any”的参数不能赋给类型“never”的参数。
+
+原因：item已经定义了any类型，但是data的类型还没有定义，默认为never
+
+解决：
+
+这里要用到TS的类型断言，通过TS的类型断言强制把data的类型转化为any，就正常不会报错了
+
+```js
+class Queue{
+    // 处理前
+    // private data = []
+	// 处理后
+    private data = <any>[]
+    push(item){
+        return this.data.push(item)
+    }
+   
+}
+```
+
