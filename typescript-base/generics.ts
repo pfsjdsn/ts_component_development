@@ -17,3 +17,23 @@ function swap<T,U>(tuple:[T,U]):[U,T]{
     return [tuple[1],tuple[0]]
 }
 const result2 = swap(['string', 123])
+
+
+// 约束泛型
+/**
+ * extends关键字
+ */
+
+// 此处length为属性
+interface IwithLength{
+    length:number
+}
+function echoIwithLength<T extends IwithLength>(arg:T):T{
+    console.log(arg.length)
+    return arg
+}
+
+const str1  = echoIwithLength('str')
+const obj  = echoIwithLength({length:10})
+const arr2  = echoIwithLength([1,2,3])
+// echoIwithLength(12)
