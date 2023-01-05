@@ -1,3 +1,4 @@
+import { onMounted } from 'vue';
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <h1>{{ count }}</h1>
@@ -9,12 +10,17 @@
   </ul>
   <h1>{{ person.name }}</h1>
   <h1>{{ greetings }}</h1>
+  <h1>x:{{ x }} y:{{ y }}</h1>
   <button @click="increase">+1</button>
   <button @click="updateGreeting">update title</button>
 </template>
 
 <script lang="ts">
-import { ref, computed, reactive, toRefs, onMounted, onUpdated, onRenderTriggered, watch } from 'vue'
+import {
+  ref, computed, reactive, toRefs, onUpdated, onRenderTriggered, watch
+  , onMounted, onUnmounted
+} from 'vue'
+import useMousePosition from './hooks/useMousePosition'
 interface DataProps {
   count: number;
   double: number;
@@ -66,6 +72,26 @@ export default {
     const updateGreeting = () => {
       greetings.value += 'hello'
     }
+    /**
+     * 获取当前鼠标坐标移动位置
+     */
+    // const x = ref(0)
+    // const y = ref(0)
+    // const updateMouse = (e: MouseEvent) => {
+    //   x.value = e.pageX
+    //   y.value = e.pageY
+    // }
+    // onMounted(() => {
+    //   document.addEventListener('click', updateMouse)
+    // })
+    // onUnmounted(() => {
+    //   document.removeEventListener('click', updateMouse)
+    // })
+
+    /**
+     * hooks的使用
+     */
+    const { x, y } = useMousePosition()
     watch([greetings, () => data.count], (newValue, oldValue) => {
       console.log(newValue, 'new')
       console.log(oldValue, 'old')
@@ -77,7 +103,9 @@ export default {
     return {
       ...refData,
       updateGreeting,
-      greetings
+      greetings,
+      x,
+      y
     }
   },
 }
