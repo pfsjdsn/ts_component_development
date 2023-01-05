@@ -11,6 +11,8 @@ import { onMounted } from 'vue';
   <h1>{{ person.name }}</h1>
   <h1>{{ greetings }}</h1>
   <h1>x:{{ x }} y:{{ y }}</h1>
+  <h1 v-if="loading">Loading!</h1>
+  <img v-if="loaded" :src="result.message">
   <button @click="increase">+1</button>
   <button @click="updateGreeting">update title</button>
 </template>
@@ -21,6 +23,7 @@ import {
   , onMounted, onUnmounted
 } from 'vue'
 import useMousePosition from './hooks/useMousePosition'
+import useURLLoader from './hooks/useURLLoader'
 interface DataProps {
   count: number;
   double: number;
@@ -89,9 +92,13 @@ export default {
     // })
 
     /**
-     * hooks的使用
+     * hooks的使用： 获取当前鼠标坐标移动位置
      */
     const { x, y } = useMousePosition()
+    /**
+     * hooks的使用： 显示和隐藏loading状态
+     */
+    const { result, loading, loaded } = useURLLoader('https://dog.ceo/api/breeds/image/random')
     watch([greetings, () => data.count], (newValue, oldValue) => {
       console.log(newValue, 'new')
       console.log(oldValue, 'old')
@@ -105,7 +112,10 @@ export default {
       updateGreeting,
       greetings,
       x,
-      y
+      y,
+      result,
+      loading,
+      loaded
     }
   },
 }

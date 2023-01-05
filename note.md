@@ -89,3 +89,15 @@ let sum:(x:number,y:number) =>number
 const result = sum(1,2)
 ```
 
+
+
+vue3报错 找不到模块“[axios](https://so.csdn.net/so/search?q=axios&spm=1001.2101.3001.7020)”或其相应的类型声明
+
+解决：
+
+项目未安装axios依赖，项目根目录下执行下列指令
+
+```js
+cnpm install --save axios 
+```
+
