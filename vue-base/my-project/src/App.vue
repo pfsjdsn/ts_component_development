@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import {ref,computed,reactive,toRefs} from 'vue'
-interface DataProps{
+import {ref,computed,reactive,toRefs,onMounted,onUpdated,onRenderTriggered} from 'vue'
+interface DataProps{ 
   count:number;
   double:number;
   increase:()=>void;
@@ -41,6 +41,16 @@ export default {
        * reactive
        * toRefs
        */
+       onMounted(() =>{
+        console.log('Mounted')
+       })
+       onUpdated(() =>{
+        console.log('Updated')
+       })
+      //  onRenderTriggered调试函数，监测更新的数据
+       onRenderTriggered((event) =>{
+        console.log(event)
+       })
       const data:DataProps = reactive({
         count:0,
         increase:()=>{data.count++},
