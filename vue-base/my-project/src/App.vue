@@ -1,33 +1,41 @@
 <template>
+  <h2>{{ error }}</h2>
   <Suspense>
     <!--  请求成功返回的数据 -->
     <template #default>
-      <async-show />
+      <div>
+        <async-show  />
+        <dog-show />
+      </div>
     </template>
     <!-- 请求失败显示的数据 -->
     <template #fallback>
-      <h1>Loading !...</h1>
+      <div>
+        <h1>Loading !...</h1>
+      </div>
     </template>
   </Suspense>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <h1>{{ count }}</h1>
-  <h1>{{ double }}</h1>
-  <ul>
-    <li v-for="number in numbers" :key="number">
-      <h1>{{ number }}</h1>
-    </li>
-  </ul>
-  <h1>{{ person.name }}</h1>
-  <h1>{{ greetings }}</h1>
-  
-  <button @click="openModal">open Modal</button>
-  <h1>x:{{ x }} y:{{ y }}</h1>
-  <ModalDig :isOpen="modalIsOpen" @close-modal="onModalClose"></ModalDig>
-  <h1 v-if="loading">Loading!</h1>
-  <!-- <img v-if="loaded" :src="result.message"> -->
-  <img v-if="loaded" :src="result[0].url" />
-  <button @click="increase">+1</button>
-  <button @click="updateGreeting">update title</button>
+  <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
+  <div >
+    <h1>{{ count }}</h1>
+    <h1>{{ double }}</h1>
+    <ul>
+      <li v-for="number in numbers" :key="number">
+        <h1>{{ number }}</h1>
+      </li>
+    </ul>
+    <h1>{{ person.name }}</h1>
+    <h1>{{ greetings }}</h1>
+
+    <button @click="openModal">open Modal</button>
+    <h1>x:{{ x }} y:{{ y }}</h1>
+    <ModalDig :isOpen="modalIsOpen" @close-modal="onModalClose"></ModalDig>
+    <h1 v-if="loading">Loading!</h1>
+    <!-- <img v-if="loaded" :src="result.message"> -->
+    <img v-if="loaded" :src="result[0].url" />
+    <button @click="increase">+1</button>
+    <button @click="updateGreeting">update title</button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -42,11 +50,13 @@ import {
   watch,
   onMounted,
   onUnmounted,
+  onErrorCaptured,
 } from "vue";
 import useMousePosition from "./hooks/useMousePosition";
 import useURLLoader from "./hooks/useURLLoader";
 import ModalDig from "./components/ModalDig.vue";
 import AsyncShow from "./components/AsyncShow.vue";
+import DogShow from "./components/DogShow.vue";
 interface DataProps {
   count: number;
   double: number;
@@ -69,8 +79,15 @@ export default {
   components: {
     ModalDig,
     AsyncShow,
+    DogShow,
   },
   setup() {
+    const error = ref(null);
+    onErrorCaptured((e: any) => {
+      error.value = e;
+      // 此处表示错误是否要向上传播
+      return true;
+    });
     /**
      * ref的使用
      */
@@ -176,6 +193,7 @@ export default {
       modalIsOpen,
       openModal,
       onModalClose,
+      error,
     };
   },
 };
