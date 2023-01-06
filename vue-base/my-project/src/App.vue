@@ -9,8 +9,9 @@
   </ul>
   <h1>{{ person.name }}</h1>
   <h1>{{ greetings }}</h1>
+  <button @click="openModal">open Modal</button>
   <h1>x:{{ x }} y:{{ y }}</h1>
-  <ModalDig />
+  <ModalDig :isOpen="modalIsOpen" @close-modal="onModalClose"></ModalDig>
   <h1 v-if="loading">Loading!</h1>
   <!-- <img v-if="loaded" :src="result.message"> -->
   <img v-if="loaded" :src="result[0].url">
@@ -133,6 +134,13 @@ export default {
     data.numbers[0] = 5
     data.person.name = "xiaoming"
     const refData = toRefs(data)
+    const modalIsOpen = ref(false)
+    const openModal = () => {
+      modalIsOpen.value = true
+    }
+    const onModalClose = () => {
+      modalIsOpen.value = false
+    }
     return {
       ...refData,
       updateGreeting,
@@ -141,7 +149,10 @@ export default {
       y,
       result,
       loading,
-      loaded
+      loaded,
+      modalIsOpen,
+      openModal,
+      onModalClose
     }
   },
 }
