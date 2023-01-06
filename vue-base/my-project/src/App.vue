@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
+  <img alt="Vue logo" src="./assets/logo.png" />
   <h1>{{ count }}</h1>
   <h1>{{ double }}</h1>
   <ul>
@@ -9,31 +9,47 @@
   </ul>
   <h1>{{ person.name }}</h1>
   <h1>{{ greetings }}</h1>
+  <Suspense>
+    <template #default>
+      <async-show />
+    </template>
+    <template #fallback>
+      <h1>Loading !...</h1>
+    </template>
+  </Suspense>
   <button @click="openModal">open Modal</button>
   <h1>x:{{ x }} y:{{ y }}</h1>
   <ModalDig :isOpen="modalIsOpen" @close-modal="onModalClose"></ModalDig>
   <h1 v-if="loading">Loading!</h1>
   <!-- <img v-if="loaded" :src="result.message"> -->
-  <img v-if="loaded" :src="result[0].url">
+  <img v-if="loaded" :src="result[0].url" />
   <button @click="increase">+1</button>
   <button @click="updateGreeting">update title</button>
 </template>
 
 <script lang="ts">
-import { __values } from 'tslib';
+import { __values } from "tslib";
 import {
-  ref, computed, reactive, toRefs, onUpdated, onRenderTriggered, watch
-  , onMounted, onUnmounted
-} from 'vue'
-import useMousePosition from './hooks/useMousePosition'
-import useURLLoader from './hooks/useURLLoader';
-import ModalDig from './components/ModalDig.vue'
+  ref,
+  computed,
+  reactive,
+  toRefs,
+  onUpdated,
+  onRenderTriggered,
+  watch,
+  onMounted,
+  onUnmounted,
+} from "vue";
+import useMousePosition from "./hooks/useMousePosition";
+import useURLLoader from "./hooks/useURLLoader";
+import ModalDig from "./components/ModalDig.vue";
+import AsyncShow from "./components/AsyncShow.vue";
 interface DataProps {
   count: number;
   double: number;
   increase: () => void;
   numbers: number[];
-  person: { name?: string }
+  person: { name?: string };
 }
 interface DogResult {
   message: string;
@@ -46,9 +62,10 @@ interface CatResult {
   height: string;
 }
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    ModalDig
+    ModalDig,
+    AsyncShow,
   },
   setup() {
     /**
@@ -72,26 +89,28 @@ export default {
      * toRefs
      */
     onMounted(() => {
-      console.log('Mounted')
-    })
+      console.log("Mounted");
+    });
     onUpdated(() => {
-      console.log('Updated')
-    })
+      console.log("Updated");
+    });
     //  onRenderTriggered调试函数，监测更新的数据
     onRenderTriggered((event) => {
-      console.log(event)
-    })
+      console.log(event);
+    });
     const data: DataProps = reactive({
       count: 0,
-      increase: () => { data.count++ },
+      increase: () => {
+        data.count++;
+      },
       double: computed(() => data.count * 2),
       numbers: [0, 1, 2],
-      person: {}
-    })
-    const greetings = ref('')
+      person: {},
+    });
+    const greetings = ref("");
     const updateGreeting = () => {
-      greetings.value += 'hello'
-    }
+      greetings.value += "hello";
+    };
     /**
      * 获取当前鼠标坐标移动位置
      */
@@ -111,36 +130,37 @@ export default {
     /**
      * hooks的使用： 获取当前鼠标坐标移动位置
      */
-    const { x, y } = useMousePosition()
+    const { x, y } = useMousePosition();
     /**
      * hooks的使用： 显示和隐藏loading状态
      */
     // const { result, loading, loaded } = useURLLoader<DogResult>('https://dog.ceo/api/breeds/image/random')
     /**
- * hooks的使用： 泛型改造
- */
-    const { result, loading, loaded } = useURLLoader<CatResult[]>('https://api.thecatapi.com/v1/images/search?limit=1')
+     * hooks的使用： 泛型改造
+     */
+    const { result, loading, loaded } = useURLLoader<CatResult[]>(
+      "https://api.thecatapi.com/v1/images/search?limit=1"
+    );
     watch(result, () => {
       if (result.value) {
-        console.log(result.value[0].url, 'value');
-
+        console.log(result.value[0].url, "value");
       }
-    })
+    });
     watch([greetings, () => data.count], (newValue, oldValue) => {
-      console.log(newValue, 'new')
-      console.log(oldValue, 'old')
-      document.title = 'updated' + greetings.value + data.count
-    })
-    data.numbers[0] = 5
-    data.person.name = "xiaoming"
-    const refData = toRefs(data)
-    const modalIsOpen = ref(false)
+      console.log(newValue, "new");
+      console.log(oldValue, "old");
+      document.title = "updated" + greetings.value + data.count;
+    });
+    data.numbers[0] = 5;
+    data.person.name = "xiaoming";
+    const refData = toRefs(data);
+    const modalIsOpen = ref(false);
     const openModal = () => {
-      modalIsOpen.value = true
-    }
+      modalIsOpen.value = true;
+    };
     const onModalClose = () => {
-      modalIsOpen.value = false
-    }
+      modalIsOpen.value = false;
+    };
     return {
       ...refData,
       updateGreeting,
@@ -152,10 +172,10 @@ export default {
       loaded,
       modalIsOpen,
       openModal,
-      onModalClose
-    }
+      onModalClose,
+    };
   },
-}
+};
 </script>
 
 <style>
