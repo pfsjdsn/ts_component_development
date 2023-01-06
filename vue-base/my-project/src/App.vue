@@ -10,6 +10,7 @@
   <h1>{{ person.name }}</h1>
   <h1>{{ greetings }}</h1>
   <h1>x:{{ x }} y:{{ y }}</h1>
+  <ModalDig />
   <h1 v-if="loading">Loading!</h1>
   <!-- <img v-if="loaded" :src="result.message"> -->
   <img v-if="loaded" :src="result[0].url">
@@ -25,6 +26,7 @@ import {
 } from 'vue'
 import useMousePosition from './hooks/useMousePosition'
 import useURLLoader from './hooks/useURLLoader';
+import ModalDig from './components/ModalDig.vue'
 interface DataProps {
   count: number;
   double: number;
@@ -44,6 +46,9 @@ interface CatResult {
 }
 export default {
   name: 'App',
+  components: {
+    ModalDig
+  },
   setup() {
     /**
      * ref的使用
@@ -110,9 +115,9 @@ export default {
      * hooks的使用： 显示和隐藏loading状态
      */
     // const { result, loading, loaded } = useURLLoader<DogResult>('https://dog.ceo/api/breeds/image/random')
-        /**
-     * hooks的使用： 泛型改造
-     */
+    /**
+ * hooks的使用： 泛型改造
+ */
     const { result, loading, loaded } = useURLLoader<CatResult[]>('https://api.thecatapi.com/v1/images/search?limit=1')
     watch(result, () => {
       if (result.value) {
