@@ -1,4 +1,14 @@
 <template>
+  <Suspense>
+    <!--  请求成功返回的数据 -->
+    <template #default>
+      <async-show />
+    </template>
+    <!-- 请求失败显示的数据 -->
+    <template #fallback>
+      <h1>Loading !...</h1>
+    </template>
+  </Suspense>
   <img alt="Vue logo" src="./assets/logo.png" />
   <h1>{{ count }}</h1>
   <h1>{{ double }}</h1>
@@ -9,14 +19,7 @@
   </ul>
   <h1>{{ person.name }}</h1>
   <h1>{{ greetings }}</h1>
-  <Suspense>
-    <template #default>
-      <async-show />
-    </template>
-    <template #fallback>
-      <h1>Loading !...</h1>
-    </template>
-  </Suspense>
+  
   <button @click="openModal">open Modal</button>
   <h1>x:{{ x }} y:{{ y }}</h1>
   <ModalDig :isOpen="modalIsOpen" @close-modal="onModalClose"></ModalDig>

@@ -318,3 +318,74 @@ export default {
 效果：
 
 ![动画](C:\Users\admin\Desktop\动画.gif)
+
+
+
+
+
+#### vue3 Suspense 异步请求的使用
+
+子组件：
+
+my-project\src\components\AsyncShow.vue
+
+```vue
+<template>
+  <h1>{{ result }}</h1>
+</template>
+```
+
+```js
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
+  setup() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        return resolve({
+          result: 42,
+        });
+      }, 3000);
+    });
+  },
+});
+</script>
+```
+
+
+
+使用：
+
+父组件：
+
+my-project\src\App.vue
+
+```vue
+<template>
+  <Suspense>
+    <!--  请求成功返回的数据 -->
+    <template #default>
+      <async-show />
+    </template>
+    <!-- 请求失败显示的数据 -->
+    <template #fallback>
+      <h1>Loading !...</h1>
+    </template>
+  </Suspense>
+</template>
+```
+
+```js
+<script lang="ts">
+import AsyncShow from "./components/AsyncShow.vue";
+export default {
+  name: "App",
+  components: {
+    AsyncShow,
+  },
+</script>
+```
+
+效果：3秒后显示结果 
+
+![12](C:\Users\admin\Desktop\12.gif)
