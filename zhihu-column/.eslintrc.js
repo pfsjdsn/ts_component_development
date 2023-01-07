@@ -12,6 +12,7 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    "indent": 0,
     "quotes": 'off',
     "semi": 'off',
     "comma-dangle": 'off',
