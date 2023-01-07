@@ -12,6 +12,7 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    "eol-last": 0,
     "indent": 0,
     "quotes": 'off',
     "semi": 'off',
